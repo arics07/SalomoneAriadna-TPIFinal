@@ -1,0 +1,6 @@
+.env
+node_modules
+.vscode
+script.js
+pasos.txt
+public
