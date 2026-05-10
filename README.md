@@ -103,4 +103,4 @@ Se recomienda usar Postman o Thunder Client para probar los endpoints.
 
 ## 👩‍💻 Autor
 
-Proyecto desarrollado por Ariadna Salomone
+Proyecto desarrollado por Ariadna Salomone✨
