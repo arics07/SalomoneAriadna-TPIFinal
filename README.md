@@ -62,17 +62,52 @@ npm start
 - PUT /api/patients/:id
 - DELETE /api/patients/:id
 
+
 ### 🩺 Practitioners
 - GET /api/practitioners
 - POST /api/practitioners
 - PUT /api/practitioners/:id
 - DELETE /api/practitioners/:id
 
+Ejemplo para agregar un nuevo especialista:
+
+
+```bash
+{
+  "name": "Ana Martinez",
+  "specialty": "Cirugía"
+}
+```
+⚠️ Restricción de especialidades
+
+El campo specialty solo acepta un conjunto de valores predefinidos:
+
+"Lic. en Nutrición"
+"Dermatología"
+"Cardiología"
+"Psicología"
+
+Estos valores pueden ser modificados o ampliados desde el backend según las necesidades del sistema.
+
+
 ### 📅 Appointments
 - GET /api/appointments
 - POST /api/appointments
 - PUT /api/appointments/:id
 - DELETE /api/appointments/:id
+
+Ejemplo: para agregar un nuevo turno:
+
+```bash
+{
+  "patient": "69fffcbafbdfc407c5520476",
+  "practitioner": "69fffbbc37e640b6eb8788af",
+  "date": "2026-05-10T18:00:00.000Z",
+  "status": "confirmado",
+  "notes": "Consulta nutricional inicial"
+}
+```
+
 
 ---
 

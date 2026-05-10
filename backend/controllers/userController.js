@@ -18,18 +18,27 @@ exports.registerUser = async (req, res) => {
             return res.status(400).json({ message: 'Email inválido' });
         };
 
-        if (userModel.findUserByEmail(normalizedEmail)) {
+        const existingUser = await userModel.findOne({ email: normalizedEmail });
+
+        if (existingUser) {
             return res.status(400).json({ message: 'El usuario ya existe' });
         };
 
         // Hash de contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = await userModel.createUser({ email: normalizedEmail, password: hashedPassword });
+        const newUser = await userModel.create({ 
+            email: normalizedEmail, 
+            password: hashedPassword 
+        });
 
-        res.status(201).json({ id: newUser.id, email: newUser.email });
+        res.status(201).json({ 
+            id: newUser.id, 
+            email: newUser.email 
+        });
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error en el servidor' });
     };
 };
@@ -47,7 +56,7 @@ exports.loginUser = async (req, res) => {
 
         const normalizedEmail = email.toLowerCase();
 
-        const user = userModel.findUserByEmail(normalizedEmail);
+        const user = await userModel.findOne({ email: normalizedEmail });
 
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -60,10 +69,16 @@ exports.loginUser = async (req, res) => {
         };
 
         //Genera el token
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { id: user.id, email: user.email }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
         res.json({ token });
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Error en el servidor' });
     };
 

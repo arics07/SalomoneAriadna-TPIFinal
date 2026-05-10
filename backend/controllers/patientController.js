@@ -3,7 +3,7 @@ const patientModel = require("../models/patientModel");
 // Obtener todos los pacientes
 exports.getAllPatients = async (req, res) => {
    try {
-      const patients = await patientModel.getAllPatients();
+      const patients = await patientModel.find();
       res.json(patients);
    } catch (error) {
       res.status(500).json({ error: error.message });
@@ -14,7 +14,7 @@ exports.getAllPatients = async (req, res) => {
 // Crear un nuevo paciente
 exports.createPatient = async (req, res) => {
    try {
-      const newPatient = await patientModel.createPatient(req.body);
+      const newPatient = await patientModel.create(req.body);
       res.status(201).json(newPatient);
    } catch (error) {
       res.status(500).json({ error: error.message });
@@ -26,7 +26,7 @@ exports.createPatient = async (req, res) => {
 exports.getPatientById = async (req, res) => {
    try {
       const id = req.params.id;
-      const patient = await patientModel.getPatientById(id);
+      const patient = await patientModel.findById(id);
 
       if (!patient) {
          return res.status(404).json({ error: "Paciente no encontrado" });
@@ -44,7 +44,11 @@ exports.updatePatient = async (req, res) => {
    try {
       const id = req.params.id;
 
-      const updated = await patientModel.updatePatient(id, req.body);
+      const updated = await patientModel.findByIdAndUpdate(
+         id,
+         req.body,
+         { new: true }
+      );
 
       if (!updated) {
          return res.status(404).json({ error: "Paciente no encontrado" });
@@ -61,7 +65,7 @@ exports.updatePatient = async (req, res) => {
 exports.deletePatient = async (req, res) => {
    try {
       const id = req.params.id;
-      const result = await patientModel.deletePatient(id);
+      const result = await patientModel.findByIdAndDelete(id);
 
       if (!result) {
          return res.status(404).json({ error: "Paciente no encontrado" });

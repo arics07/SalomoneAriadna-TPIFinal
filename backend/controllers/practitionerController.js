@@ -3,7 +3,7 @@ const practitionerModel = require("../models/practitionerModel");
 //Obtener todos los especialistas
 exports.getAllPractitioners = async (req, res) => {
    try {
-      const practitioners = await practitionerModel.getAllPractitioners();
+      const practitioners = await practitionerModel.find();
       res.json(practitioners);
    } catch (error) {
       res.status(500).json({ error: error.message });
@@ -14,7 +14,7 @@ exports.getAllPractitioners = async (req, res) => {
 //Crear un nuevo especialista
 exports.createPractitioner = async (req, res) => {
    try {
-      const newPractitioner = await practitionerModel.createPractitioner(req.body);
+      const newPractitioner = await practitionerModel.create(req.body);
       res.status(201).json(newPractitioner);
    } catch (error) {
       res.status(500).json({ error: error.message });
@@ -26,7 +26,7 @@ exports.createPractitioner = async (req, res) => {
 exports.getPractitionerById = async (req, res) => {
    try {
       const id = req.params.id;
-      const practitioner = await practitionerModel.getPractitionerById(id);
+      const practitioner = await practitionerModel.findById(id);
 
       if (!practitioner) {
          return res.status(404).json({ error: "Especialista no encontrado" });
@@ -44,7 +44,11 @@ exports.updatePractitioner = async (req, res) => {
     try {
       const id = req.params.id;
 
-      const updated = await practitionerModel.updatePractitioner(id, req.body);
+      const updated = await practitionerModel.findByIdAndUpdate(
+         id,
+         req.body,
+         { new: true }
+      );
 
       if (!updated) {
          return res.status(404).json({ error: "Especialista no encontrado" });
@@ -61,7 +65,7 @@ exports.updatePractitioner = async (req, res) => {
 exports.deletePractitioner = async (req, res) => {
    try {
       const id = req.params.id;
-      const result = await practitionerModel.deletePractitioner(id);
+      const result = await practitionerModel.findByIdAndDelete(id);
 
       if (!result) {
          return res.status(404).json({ error: "Especialista no encontrado" });
