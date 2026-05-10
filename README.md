@@ -55,6 +55,35 @@ npm start
 ### 🔐 Users (Auth)
 - POST /users/register
 - POST /users/login
+
+Ejemplo REGISTER un nuevo usuario:
+
+```bash
+{
+  "email": "ari@test.com",
+  "password": "123456"
+}
+```
+
+Ejemplo LOGIN de un usuario registrado:
+
+```bash
+{
+  "email": "ari@test.com",
+  "password": "123456"
+}
+```
+La respuesta recibida desde el servidor será de la forma: 
+
+```bash
+{
+  "message": "Login exitoso",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+}
+```
+
+El token JWT debe usarse en el header Authorization para acceder a rutas protegidas.
+
   
 ### 👤 Patients
 - GET /api/patients
@@ -62,6 +91,19 @@ npm start
 - PUT /api/patients/:id
 - DELETE /api/patients/:id
 
+Ejemplo para agregar un nuevo paciente:
+
+```bash
+{
+  "name": "María López",
+  "dni": "35111222",
+  "email": "maria@test.com",
+  "phone": "2215551234",
+  "notes": "Paciente desde mayo 2019"
+}
+```
+
+⚠️ Los campos name, dni y phone son obligatorios y deber ser ingresados siempre. 
 
 ### 🩺 Practitioners
 - GET /api/practitioners
@@ -70,7 +112,6 @@ npm start
 - DELETE /api/practitioners/:id
 
 Ejemplo para agregar un nuevo especialista:
-
 
 ```bash
 {
@@ -108,6 +149,16 @@ Ejemplo: para agregar un nuevo turno:
 }
 ```
 
+⚠️ Restricción del estado del turno:
+
+El campo status solo acepta un conjunto de valores predefinidos:
+
+"confirmado"
+"en espera"
+"atendido"
+"cancelado"
+
+Estos valores pueden ser modificados o ampliados desde el backend según las necesidades del sistema.
 
 ---
 
