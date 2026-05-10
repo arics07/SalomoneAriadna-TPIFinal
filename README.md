@@ -84,6 +84,7 @@ La respuesta recibida desde el servidor será de la forma:
 
 El token JWT debe usarse en el header Authorization para acceder a rutas protegidas.
 
+
   
 ### 👤 Patients
 - GET /api/patients
@@ -104,6 +105,8 @@ Ejemplo para agregar un nuevo paciente:
 ```
 
 ⚠️ Los campos name, dni y phone son obligatorios y deber ser ingresados siempre. 
+
+
 
 ### 🩺 Practitioners
 - GET /api/practitioners
@@ -129,6 +132,7 @@ El campo specialty solo acepta un conjunto de valores predefinidos:
 "Psicología"
 
 Estos valores pueden ser modificados o ampliados desde el backend según las necesidades del sistema.
+
 
 
 ### 📅 Appointments
